@@ -13,3 +13,10 @@
 .about-art{display:flex;align-items:center;justify-content:center;min-height:0;padding:0;overflow:visible;background:#111}
 .about-art img{display:block;width:min(100%,540px);height:auto;max-height:none;object-fit:contain;box-shadow:none;border-radius:0}
 @media(max-width:700px){.brand img{width:54px;height:54px}.about-art img{width:100%}}
+
+/* Logomarca em destaque e bicicleta Enova na seção Quem somos. */
+.product-stage{display:flex;align-items:center;justify-content:center}
+.product-stage img{width:min(100%,490px);height:auto;max-height:530px;object-fit:contain;box-shadow:none;border-radius:12px}
+.product-stage:after{display:none}
+.about-art img{width:100%;max-width:540px;height:auto;max-height:none;object-fit:contain;border-radius:10px}
+@media(max-width:700px){.product-stage img{width:min(100%,390px);max-height:none}.about-art img{width:100%}}

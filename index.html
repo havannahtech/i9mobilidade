@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i9 Mobilidade Elétrica | Central de Sistemas</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #a3e635;
+            --primary-glow: rgba(163, 230, 53, 0.35);
+            --bg-main: #050505;
+            --card-bg: rgba(18, 18, 20, 0.75);
+            --card-border: rgba(163, 230, 53, 0.15);
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(163, 230, 53, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            overflow-x: hidden;
+        }
+
+        /* BANNER DO LOGO / CABEÇALHO */
+        .header {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(163, 230, 53, 0.08);
+            border: 1px solid rgba(163, 230, 53, 0.25);
+            padding: 6px 16px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.1);
+        }
+
+        .brand-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        .main-title {
+            font-size: clamp(30px, 5vw, 44px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* PAINEL DE AUTENTICAÇÃO / SENHA */
+        .auth-box {
+            background: rgba(24, 24, 27, 0.8);
+            border: 1px solid var(--card-border);
+            padding: 20px 24px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .auth-title {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .password-input {
+            width: 100%;
+            background: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-align: center;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .password-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .btn-unlock {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-unlock:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+        }
+
+        .auth-error {
+            color: var(--danger);
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* CONTAINER DOS CARDS DE SISTEMAS */
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+            gap: 24px;
+            width: 100%;
+            max-width: 860px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            opacity: 0.6;
+            pointer-events: none; /* Bloqueado até a senha ser digitada */
+        }
+
+        .card.unlocked {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card.unlocked:hover {
+            transform: translateY(-6px);
+            border-color: rgba(163, 230, 53, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--primary-glow);
+        }
+
+        .card.unlocked:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(163, 230, 53, 0.1);
+            border: 1px solid rgba(163, 230, 53, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .btn-access {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, #84cc16 100%);
+            color: #050505;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 14px 24px;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(163, 230, 53, 0.2);
+        }
+
+        .btn-access.disabled {
+            background: #27272a;
+            color: #71717a;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-access:not(.disabled):hover {
+            filter: brightness(1.1);
+            box-shadow: 0 6px 20px rgba(163, 230, 53, 0.4);
+        }
+
+        .btn-access svg {
+            transition: transform 0.2s ease;
+        }
+
+        .btn-access:not(.disabled):hover svg {
+            transform: translateX(4px);
+        }
+
+        /* RODAPÉ E STATUS */
+        .footer {
+            margin-top: 35px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #a1a1aa;
+            margin-top: 10px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e;
+        }
+
+        /* ANIMAÇÕES */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 480px) {
+            body { padding: 16px; }
+            .card { padding: 22px; }
+            .main-title { font-size: 28px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO DA CENTRAL -->
+    <header class="header">
+        <div class="brand-badge">⚡ Mobilidade Elétrica</div>
+        <h1 class="main-title">i9 MOBILIDADE</h1>
+        <p class="subtitle">Insira a senha de acesso para liberar os sistemas</p>
+    </header>
+
+    <!-- PAINEL DE AUTENTICAÇÃO -->
+    <div class="auth-box" id="authBox">
+        <div class="auth-title">
+            🔒 Autenticação de Acesso
+        </div>
+        <div class="input-group">
+            <input type="password" id="passInput" class="password-input" maxlength="3" placeholder="***" autocomplete="off" onkeyup="verificarEnter(event)">
+            <button class="btn-unlock" onclick="validarSenha()">Entrar</button>
+        </div>
+        <div class="auth-error" id="authError">⚠️ Senha incorreta! Tente novamente.</div>
+    </div>
+
+    <!-- PAINEL DE SISTEMAS -->
+    <main class="systems-grid">
+
+        <!-- CARD 1: DOCUMENTOS -->
+        <div class="card" id="cardDoc">
+            <div>
+                <div class="card-icon">📄</div>
+                <h2 class="card-title">i9 Documentos</h2>
+                <p class="card-desc">Emissão de documentos de autopropelidos, comprovantes de entrega e termos de verificação de veículos elétricos.</p>
+            </div>
+            <a href="https://havannahtech.github.io/i9doc/" target="_blank" rel="noopener" class="btn-access disabled" id="btnDoc">
+                Bloqueado 🔒
+            </a>
+        </div>
+
+        <!-- CARD 2: PARCELAMENTO -->
+        <div class="card" id="cardParc">
+            <div>
+                <div class="card-icon">💳</div>
+                <h2 class="card-title">i9 Parcelamento</h2>
+                <p class="card-desc">Simulador de financiamento e parcelamento de veículos, cálculo de entradas e opções de pagamento para vendas.</p>
+            </div>
+            <a href="https://havannahtech.github.io/i9parcelamento/" target="_blank" rel="noopener" class="btn-access disabled" id="btnParc">
+                Bloqueado 🔒
+            </a>
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ DE INFRAESTRUTURA -->
+    <footer class="footer">
+        <p>© i9 Mobilidade Elétrica • Todos os direitos reservados</p>
+        <div class="status-pill">
+            <span class="status-dot"></span>
+            Sistemas protegidos e operacionais
+        </div>
+    </footer>
+
+    <script>
+        const SENHA_CORRETA = "ads";
+
+        function validarSenha() {
+            const input = document.getElementById("passInput");
+            const error = document.getElementById("authError");
+            const authBox = document.getElementById("authBox");
+            const cardDoc = document.getElementById("cardDoc");
+            const cardParc = document.getElementById("cardParc");
+            const btnDoc = document.getElementById("btnDoc");
+            const btnParc = document.getElementById("btnParc");
+
+            if (input.value.toLowerCase() === SENHA_CORRETA) {
+                // Oculta mensagem de erro se houver
+                error.style.display = "none";
+                
+                // Desbloqueia os cards
+                cardDoc.classList.add("unlocked");
+                cardParc.classList.add("unlocked");
+
+                // Atualiza os botões
+                btnDoc.classList.remove("disabled");
+                btnDoc.innerHTML = `Acessar Documentos <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+
+                btnParc.classList.remove("disabled");
+                btnParc.innerHTML = `Acessar Parcelamento <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+
+                // Altera o box de senha para indicar sucesso
+                authBox.innerHTML = `<div style="color:#a3e635; font-weight:700; font-size:14px; display:flex; align-items:center; gap:6px;">✅ Acesso Liberado com Sucesso!</div>`;
+            } else {
+                error.style.display = "block";
+                input.value = "";
+                input.focus();
+            }
+        }
+
+        function verificarEnter(event) {
+            if (event.key === "Enter") {
+                validarSenha();
+            }
+        }
+    </script>
+
+</body>
+</html>

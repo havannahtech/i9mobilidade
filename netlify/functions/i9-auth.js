@@ -4,17 +4,20 @@ exports.handler = async (event) => {
     "Cache-Control": "no-store"
   };
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, headers, body: JSON.stringify({ ok: false }) };
+    return { statusCode: 405, headers, body: JSON.stringify({ ok: false, reason: "method" }) };
   }
   let body = {};
-  try { body = JSON.parse(event.body || "{}"); } catch (_) {}
-  const expected = process.env.I9_INTERNO_PASSWORD;
-  if (!expected) {
-    return { statusCode: 503, headers, body: JSON.stringify({ ok: false, configuration: false }) };
+  try { body = JSON.parse(event.body || "{}"); } catch (_) {
+    return { statusCode: 400, headers, body: JSON.stringify({ ok: false, reason: "body" }) };
   }
-  const supplied = String(body.password || "");
+  const rawExpected = process.env.I9_INTERNO_PASSWORD;
+  if (typeof rawExpected !== "string" || rawExpected.trim().length === 0) {
+    return { statusCode: 503, headers, body: JSON.stringify({ ok: false, reason: "env_missing" }) };
+  }
+  const expected = rawExpected.trim();
+  const supplied = String(body.password ?? "").trim();
   if (supplied !== expected) {
-    return { statusCode: 401, headers, body: JSON.stringify({ ok: false }) };
+    return { statusCode: 401, headers, body: JSON.stringify({ ok: false, reason: "mismatch", envLoaded: true }) };
   }
   return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
 };

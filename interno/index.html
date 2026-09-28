@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Área Interna | i9 Mobilidade</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#070908;color:#f5f5f5;font-family:Arial,sans-serif;display:grid;place-items:center;padding:22px}.wrap{width:min(900px,100%)}.head{text-align:center;margin-bottom:28px}.brand{font-size:34px;font-weight:900;letter-spacing:-1px}.brand b{color:#a3e635}.muted{color:#9ca3af}.login{max-width:390px;margin:auto;background:#111512;border:1px solid #293128;border-radius:22px;padding:26px;box-shadow:0 20px 60px #0008}input,button,a{width:100%;border-radius:12px;padding:14px;font-size:16px}input{background:#050705;color:#fff;border:1px solid #394238;outline:none;margin:14px 0}button,.go{border:0;background:#a3e635;color:#071000;font-weight:800;cursor:pointer;text-decoration:none;text-align:center;display:block}.err{color:#f87171;font-size:13px;min-height:18px;margin-top:10px}.apps{display:none;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}.card{background:#111512;border:1px solid #293128;border-radius:22px;padding:25px}.card h2{margin-top:0}.card p{color:#9ca3af;line-height:1.5}.go{margin-top:20px}.logout{margin:25px auto 0;max-width:220px;background:#222;color:#ddd}.ok{color:#a3e635;font-weight:700}
+</style></head><body><div class="wrap">
+<div class="head"><div class="brand">i9 <b>MOBILIDADE</b></div><p class="muted">Central de Sistemas • Área Interna</p></div>
+<section class="login" id="login"><div class="ok">🔒 Acesso restrito</div><input id="pw" type="password" placeholder="Senha de acesso" autocomplete="current-password"><button id="enter">Entrar</button><div class="err" id="err"></div></section>
+<section class="apps" id="apps">
+<div class="card"><h2>📄 i9 Documentos</h2><p>Emissão de documentos e termos utilizados nas operações da i9 Mobilidade.</p><a class="go" href="https://havannahtech.github.io/i9doc/" target="_blank" rel="noopener">Acessar Documentos</a></div>
+<div class="card"><h2>💳 i9 Parcelamento</h2><p>Simulador de parcelamento e opções de pagamento para atendimento e vendas.</p><a class="go" href="https://havannahtech.github.io/i9parcelamento/" target="_blank" rel="noopener">Acessar Parcelamento</a></div>
+</section><button class="logout" id="logout" style="display:none">Sair da área interna</button>
+</div><script>
+const login=document.getElementById("login"),apps=document.getElementById("apps"),err=document.getElementById("err"),pw=document.getElementById("pw"),logout=document.getElementById("logout");
+async function entrar(){err.textContent="Verificando…";try{const r=await fetch("/.netlify/functions/i9-auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw.value})});if(r.ok){sessionStorage.setItem("i9-interno","1");mostrar()}else{err.textContent=r.status===503?"Configure a senha no Netlify.":"Senha incorreta.";pw.value="";pw.focus()}}catch(e){err.textContent="Não foi possível validar o acesso."}}
+function mostrar(){login.style.display="none";apps.style.display="grid";logout.style.display="block";pw.value="";err.textContent=""}
+document.getElementById("enter").onclick=entrar;pw.addEventListener("keydown",e=>{if(e.key==="Enter")entrar()});logout.onclick=()=>{sessionStorage.removeItem("i9-interno");location.reload()};if(sessionStorage.getItem("i9-interno")==="1")mostrar();
+</script></body></html>

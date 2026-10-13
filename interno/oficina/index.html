@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordem de Serviço - i9 Mobilidade Elétrica</title>
+  <style>
+    :root {
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --accent: #84cc16; /* Vermelho Sagaz */
+      --accent-hover: #65a30d;
+      --text-main: #1a1a1a;
+      --text-muted: #555555;
+      --border-color: #dcdcdc;
+      --input-bg: #f1f3f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .os-container {
+      width: 100%;
+      max-width: 900px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Cabeçalho */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .brand h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #111;
+    }
+
+    .brand h1 span {
+      color: var(--accent);
+    }
+
+    .brand-sub {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .company-info {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .os-info {
+      text-align: right;
+    }
+
+    .os-number {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .os-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .whatsapp-badge {
+      display: inline-block;
+      background-color: #25d366;
+      color: #fff;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-top: 8px;
+    }
+
+    /* Seções e Formulários */
+    .section-title {
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      margin-top: 20px;
+      border-left: 4px solid var(--accent);
+      padding-left: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-cep {
+      display: grid;
+      grid-template-columns: 140px 1fr 100px;
+      gap: 12px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 8px 10px;
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, 
+    .form-group select:focus, 
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      background-color: #fff;
+    }
+
+    /* Tabela de Serviços/Peças */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: #f1f3f5;
+      color: var(--text-main);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    td input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 13px;
+    }
+
+    /* Resumo Financeiro */
+    .total-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 15px;
+    }
+
+    .total-box {
+      width: 260px;
+      background-color: #f8f9fa;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .total-row.final {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--accent);
+      border-top: 2px solid var(--border-color);
+      padding-top: 6px;
+      margin-bottom: 0;
+    }
+
+    /* Observação de Validade */
+    .footer-note {
+      margin-top: 25px;
+      padding: 10px;
+      background-color: #fff5f5;
+      border: 1px dashed var(--accent);
+      border-radius: 4px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Assinaturas */
+    .signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 35px;
+      text-align: center;
+    }
+
+    .signature-line {
+      border-top: 1px solid #999;
+      padding-top: 5px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Barra de Ações e Botões */
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 25px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .action-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background-color: #e9ecef;
+      color: #333;
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #dee2e6;
+    }
+
+    .btn-success {
+      background-color: #198754;
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background-color: #157347;
+    }
+
+    .btn-small {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    /* Regras de Impressão e Geração de PDF */
+    @media print {
+      body {
+        background-color: #fff;
+        padding: 0;
+      }
+
+      .os-container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .form-group input, 
+      .form-group select, 
+      .form-group textarea {
+        background-color: #fff !important;
+        border: 1px solid #ccc !important;
+      }
+
+      .footer-note {
+        background-color: transparent !important;
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+      }
+
+      .actions, .btn-small {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body><div style="position:fixed;bottom:10px;right:10px;z-index:999;background:#fff3cd;padding:10px;border-radius:8px;max-width:330px;font:13px Arial"><a href="/interno/">← Central i9</a> · Modelo em adaptação. Confirme dados da empresa. Não há salvamento na nuvem.</div>
+
+  <div class="os-container">
+    <!-- Cabeçalho -->
+    <header class="header">
+      <div class="brand">
+        <h1>i9 <span>MOBILIDADE</span></h1>
+        <div class="brand-sub">i9 MOBILIDADE ELÉTRICA</div>
+        <div class="company-info">
+          CNPJ: CNPJ / IE: [PREENCHER]<br>
+          Endereço da unidade: [PREENCHER]
+        </div>
+      </div>
+      <div class="os-info">
+        <div class="os-number">OS #<span id="osNumber">0001</span></div>
+        <div class="os-date">Data: <input type="date" id="dataEmissao" style="background:transparent; border:none; color:inherit;"></div>
+        <div class="whatsapp-badge">
+          Assistência: (27) 98146-8550
+        </div>
+      </div>
+    </header>
+
+    <!-- Dados do Cliente -->
+    <div class="section-title">Dados do Cliente</div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Nome Completo</label>
+        <input type="text" id="clienteNome" placeholder="Nome do cliente">
+      </div>
+      <div class="form-group">
+        <label>CPF / CNPJ</label>
+        <input type="text" id="clienteCpf" placeholder="000.000.000-00">
+      </div>
+    </div>
+    
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Telefone / WhatsApp</label>
+        <input type="text" id="clienteTel" placeholder="(00) 00000-0000">
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="clienteEmail" placeholder="cliente@email.com">
+      </div>
+    </div>
+
+    <!-- Endereço com CEP Auto -->
+    <div class="grid-cep">
+      <div class="form-group">
+        <label>CEP (Auto)</label>
+        <input type="text" id="cep" placeholder="00000-000" maxlength="9" onkeyup="buscarCEP(this.value)">
+      </div>
+      <div class="form-group">
+        <label>Endereço (Rua, Bairro, Cidade/UF)</label>
+        <input type="text" id="endereco" placeholder="Preenchido automaticamente pelo CEP">
+      </div>
+      <div class="form-group">
+        <label>Número</label>
+        <input type="text" id="numero" placeholder="Nº">
+      </div>
+    </div>
+
+    <!-- Dados do Veículo Elétrico -->
+    <div class="section-title">Dados do Veículo Elétrico</div>
+    <div class="grid-4">
+      <div class="form-group">
+        <label>Modelo</label>
+        <input type="text" id="veiculoModelo" placeholder="Ex: Scooter X900 / N70">
+      </div>
+      <div class="form-group">
+        <label>Potência (W)</label>
+        <input type="text" id="veiculoPotencia" placeholder="Ex: 1000W / 2000W">
+      </div>
+      <div class="form-group">
+        <label>Nº do Chassi / Série</label>
+        <input type="text" id="veiculoChassi" placeholder="Número de identificação">
+      </div>
+      <div class="form-group">
+        <label>Bateria (%) / Tipo</label>
+        <input type="text" id="veiculoBateria" placeholder="Ex: 80% - Lítio / Chumbo">
+      </div>
+    </div>
+
+    <!-- Diagnóstico Técnico -->
+    <div class="section-title">Defeito Relatado / Diagnóstico Técnico</div>
+    <div class="form-group">
+      <label>Reclamação / Observações do Cliente</label>
+      <textarea id="defeitoRelatado" rows="2" placeholder="Descreva o problema relatado pelo cliente..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Laudo Técnico / Parecer da Oficina</label>
+      <textarea id="laudoTecnico" rows="2" placeholder="Diagnóstico do técnico e serviços efetuados..."></textarea>
+    </div>
+
+    <!-- Tabela de Peças e Serviços -->
+    <div class="section-title">Serviços e Peças</div>
+    <table id="tabelaItens">
+      <thead>
+        <tr>
+          <th>Descrição do Serviço / Peça</th>
+          <th style="width: 80px;">Qtd</th>
+          <th style="width: 130px;">Valor Unit. (R$)</th>
+          <th style="width: 130px;">Total (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" placeholder="Ex: Mão de obra / Revisão / Peça"></td>
+          <td><input type="number" class="qtd" value="1" min="1" oninput="calcularTotais()"></td>
+          <td><input type="number" class="valor" placeholder="0.00" step="0.01" oninput="calcularTotais()"></td>
+          <td><input type="text" class="item-total" value="0.00" readonly></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary btn-small" onclick="adicionarLinha()">+ Adicionar Item</button>
+
+    <!-- Valores e Totais -->
+    <div class="total-container">
+      <div class="total-box">
+        <div class="total-row">
+          <span>Subtotal:</span>
+          <span id="subtotalVal">R$ 0,00</span>
+        </div>
+        <div class="total-row">
+          <span>Desconto (R$):</span>
+          <input type="number" id="descontoInput" value="0" step="0.01" style="width: 80px; text-align: right;" oninput="calcularTotais()">
+        </div>
+        <div class="total-row final">
+          <span>Total OS:</span>
+          <span id="totalOSVal">R$ 0,00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Observação no Rodapé -->
+    <div class="footer-note">
+      OBSERVAÇÃO: Este orçamento tem validade de 48 horas a contar da data de emissão.
+    </div>
+
+    <!-- Assinaturas -->
+    <div class="signatures">
+      <div class="signature-line">Assinatura do Técnico / Responsável</div>
+      <div class="signature-line">Assinatura do Cliente</div>
+    </div>
+
+    <!-- Área de Botões (Impressão, PDF e Avançar) -->
+    <div class="actions">
+      <div class="action-group">
+        <button class="btn btn-secondary" onclick="novaOrdemProximoNumero()">➕ Nova Ordem (Próximo Nº)</button>
+        <button class="btn btn-secondary" onclick="inserirNumeroOS()">🔢 Digitar Nº da OS</button>
+      </div>
+      
+      <div class="action-group">
+        <button class="btn btn-secondary" onclick="imprimirDocumento()">🖨️ Imprimir</button>
+        <button class="btn btn-success" onclick="baixarPDF()">📄 Baixar PDF</button>
+        <button class="btn btn-primary" onclick="finalizarOS()">Finalizar & Avançar OS</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('dataEmissao').valueAsDate = new Date();
+
+    // Busca Automática de CEP
+    function buscarCEP(val) {
+      let cep = val.replace(/\D/g, '');
+      if (cep.length === 8) {
+        document.getElementById('endereco').value = "Buscando endereço...";
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(res => res.json())
+          .then(data => {
+            if (!data.erro) {
+              document.getElementById('endereco').value = `${data.logradouro}, ${data.bairro} - ${data.localidade}/${data.uf}`;
+              document.getElementById('numero').focus();
+            } else {
+              document.getElementById('endereco').value = "CEP não encontrado.";
+            }
+          })
+          .catch(() => {
+            document.getElementById('endereco').value = "Erro ao buscar CEP.";
+          });
+      }
+    }
+
+    // Leitura segura do localStorage
+    function obterProximoNumeroOS() {
+      let atual = 1;
+      try {
+        atual = localStorage.getItem('i9_os_sequencial') || 1;
+      } catch (e) {
+        atual = window.tempOSSequencial || 1;
+      }
+      return String(atual).padStart(4, '0');
+    }
+
+    function definirNumeroOS(novoNumero) {
+      try {
+        localStorage.setItem('i9_os_sequencial', novoNumero);
+      } catch (e) {
+        window.tempOSSequencial = novoNumero;
+      }
+    }
+
+    function incrementarNumeroOS() {
+      let atual = parseInt(obterProximoNumeroOS());
+      definirNumeroOS(atual + 1);
+    }
+
+    function atualizarDisplayOS() {
+      document.getElementById('osNumber').innerText = obterProximoNumeroOS();
+    }
+
+    function limparFormulario() {
+      const inputs = document.querySelectorAll('.os-container input[type="text"], .os-container input[type="email"], .os-container textarea');
+      inputs.forEach(input => input.value = '');
+
+      document.getElementById('dataEmissao').valueAsDate = new Date();
+
+      const tbody = document.querySelector('#tabelaItens tbody');
+      tbody.innerHTML = `
+        <tr>
+          <td><input type="text" placeholder="Ex: Mão de obra / Revisão / Peça"></td>
+          <td><input type="number" class="qtd" value="1" min="1" oninput="calcularTotais()"></td>
+          <td><input type="number" class="valor" placeholder="0.00" step="0.01" oninput="calcularTotais()"></td>
+          <td><input type="text" class="item-total" value="0.00" readonly></td>
+        </tr>
+      `;
+
+      document.getElementById('descontoInput').value = '0';
+      calcularTotais();
+    }
+
+    function novaOrdemProximoNumero() {
+      incrementarNumeroOS();
+      atualizarDisplayOS();
+      limparFormulario();
+    }
+
+    function finalizarOS() {
+      const numAtual = obterProximoNumeroOS();
+      baixarPDF();
+      
+      setTimeout(() => {
+        alert(`OS #${numAtual} finalizada com sucesso! Avançando para a próxima numeração...`);
+        novaOrdemProximoNumero();
+      }, 500);
+    }
+
+    // Função para inserir manualmente qualquer número de OS
+    function inserirNumeroOS() {
+      const entrada = prompt("Informe o novo número da Ordem de Serviço:", obterProximoNumeroOS());
+      if (entrada !== null) {
+        const numParseado = parseInt(entrada, 10);
+        if (!isNaN(numParseado) && numParseado > 0) {
+          definirNumeroOS(numParseado);
+          atualizarDisplayOS();
+        } else {
+          alert("Por favor, digite um número válido maior que zero.");
+        }
+      }
+    }
+
+    // Funções de Impressão e Baixar PDF com Nome Customizado
+    function imprimirDocumento() {
+      window.print();
+    }
+
+    function baixarPDF() {
+      const numOS = obterProximoNumeroOS();
+      const nomeCliente = document.getElementById('clienteNome').value.trim().toUpperCase() || 'CLIENTE';
+      
+      const tituloOriginal = document.title;
+      document.title = `OS${numOS} ${nomeCliente}`;
+      
+      window.print();
+      
+      setTimeout(() => {
+        document.title = tituloOriginal;
+      }, 1000);
+    }
+
+    // Gerenciador da Tabela Dinâmica
+    function adicionarLinha() {
+      const tbody = document.querySelector('#tabelaItens tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" placeholder="Serviço ou peça adicional"></td>
+        <td><input type="number" class="qtd" value="1" min="1" oninput="calcularTotais()"></td>
+        <td><input type="number" class="valor" placeholder="0.00" step="0.01" oninput="calcularTotais()"></td>
+        <td><input type="text" class="item-total" value="0.00" readonly></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function calcularTotais() {
+      const linhas = document.querySelectorAll('#tabelaItens tbody tr');
+      let subtotal = 0;
+
+      linhas.forEach(linha => {
+        const qtd = parseFloat(linha.querySelector('.qtd').value) || 0;
+        const valor = parseFloat(linha.querySelector('.valor').value) || 0;
+        const totalItem = qtd * valor;
+        
+        linha.querySelector('.item-total').value = totalItem.toFixed(2);
+        subtotal += totalItem;
+      });
+
+      const desconto = parseFloat(document.getElementById('descontoInput').value) || 0;
+      const totalFinal = Math.max(0, subtotal - desconto);
+
+      document.getElementById('subtotalVal').innerText = 'R$ ' + subtotal.toFixed(2);
+      document.getElementById('totalOSVal').innerText = 'R$ ' + totalFinal.toFixed(2);
+    }
+
+    // Inicialização da tela
+    atualizarDisplayOS();
+  </script>
+</body>
+</html>

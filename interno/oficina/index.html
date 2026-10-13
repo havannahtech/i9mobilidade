@@ -360,10 +360,10 @@
       }
     }
   </style>
-</head>
+<style id="i9-cloud-style">#i9-cloud{position:sticky;top:0;z-index:40;background:#122116;color:white;padding:13px;border-radius:8px;margin-bottom:18px;box-shadow:0 3px 10px #0002}#i9-cloud input{padding:9px;margin:4px;border:1px solid #9db89c;border-radius:6px;max-width:210px}#i9-cloud button{padding:9px 13px;background:#b9f316;border:0;border-radius:6px;font-weight:bold;cursor:pointer}#i9-cloud small{display:block;margin-top:7px}#i9-cloud .cloud-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}#i9-cloud .cloud-tools button{font-size:12px}#i9-consent{margin-right:7px}@media print{#i9-cloud,.i9-marketing{display:none!important}}</style></head>
 <body><div style="position:fixed;bottom:10px;right:10px;z-index:999;background:#fff3cd;padding:10px;border-radius:8px;max-width:330px;font:13px Arial"><a href="/interno/">← Central i9</a> · Modelo em adaptação. Confirme dados da empresa. Não há salvamento na nuvem.</div>
 
-  <div class="os-container">
+  <div class="os-container"><section id="i9-cloud"><div id="i9-login"><strong>☁️ i9 Oficina • Acesso ao banco de dados</strong><div><input id="i9-email" type="email" autocomplete="username" placeholder="E-mail da equipe"><input id="i9-pass" type="password" autocomplete="current-password" placeholder="Senha"><button type="button" id="i9-login-btn">Entrar</button></div><small id="i9-login-status">Entre com um usuário autorizado do Supabase para habilitar o salvamento na nuvem.</small></div><div id="i9-logged" hidden><div class="cloud-tools"><strong>☁️ i9 Oficina</strong><span id="i9-save-status">Aguardando...</span><button type="button" id="i9-save-btn">Salvar agora</button><button type="button" id="i9-csv-btn">Exportar clientes CSV</button><button type="button" id="i9-history-btn">Buscar OS</button><button type="button" id="i9-logout-btn">Sair</button></div><small>Salvamento automático após alterações • Dados privados</small></div></section>
     <!-- Cabeçalho -->
     <header class="header">
       <div class="brand">
@@ -407,7 +407,7 @@
       </div>
     </div>
 
-    <!-- Endereço com CEP Auto -->
+    <div class="form-group i9-marketing" style="padding:12px;background:#f2f9e9;border:1px solid #cde6aa;border-radius:7px;margin:10px 0"><label style="display:flex;align-items:flex-start;gap:8px;font-size:13px"><input type="checkbox" id="i9-consent" style="margin-top:3px"> Cliente autorizou receber ofertas e comunicações de marketing da i9 pelo WhatsApp/e-mail (opcional).</label><small>O atendimento e a OS não dependem dessa autorização. Registre apenas se o cliente concordar.</small></div><!-- Endereço com CEP Auto -->
     <div class="grid-cep">
       <div class="form-group">
         <label>CEP (Auto)</label>
@@ -678,5 +678,5 @@
     // Inicialização da tela
     atualizarDisplayOS();
   </script>
-</body>
+<script src="i9-cloud.js" defer></script></body>
 </html>

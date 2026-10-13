@@ -14,7 +14,7 @@
 </section><button class="logout" id="logout" style="display:none">Sair da área interna</button>
 </div><script>
 const login=document.getElementById("login"),apps=document.getElementById("apps"),err=document.getElementById("err"),pw=document.getElementById("pw"),logout=document.getElementById("logout");
-async function entrar(){err.textContent="Verificando…";try{const r=await fetch("/.netlify/functions/i9-auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw.value})});if(r.ok){sessionStorage.setItem("i9-interno","1");mostrar()}else{err.textContent=r.status===503?"Configure a senha no Netlify.":"Senha incorreta.";pw.value="";pw.focus()}}catch(e){err.textContent="Não foi possível validar o acesso."}}
+async function entrar(){err.textContent="Verificando…";try{const r=await fetch("/.netlify/functions/i9-auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw.value})});if(r.ok){mostrar()}else{err.textContent=r.status===503?"Configure a senha no Netlify.":"Senha incorreta.";pw.value="";pw.focus()}}catch(e){err.textContent="Não foi possível validar o acesso."}}
 function mostrar(){login.style.display="none";apps.style.display="grid";logout.style.display="block";pw.value="";err.textContent=""}
-document.getElementById("enter").onclick=entrar;pw.addEventListener("keydown",e=>{if(e.key==="Enter")entrar()});logout.onclick=()=>{sessionStorage.removeItem("i9-interno");location.reload()};if(sessionStorage.getItem("i9-interno")==="1")mostrar();
+document.getElementById("enter").onclick=entrar;pw.addEventListener("keydown",e=>{if(e.key==="Enter")entrar()});logout.onclick=()=>{location.reload()};window.addEventListener("pageshow",e=>{if(e.persisted)location.reload()});
 </script></body></html>
